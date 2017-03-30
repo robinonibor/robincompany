@@ -1,0 +1,105 @@
+﻿
+@{
+    Layout = "~/Shared/_LayoutPage1.cshtml";
+}
+<div style="width:90%; margin:0 auto" class="tblContact">
+    <a class="popup btn btn-primary" href="/Contact/Save/0" style="margin-bottom:20px; margin-top:2px;">Add New Contact</a>
+    <table id="contactDataTbl">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Type Of Contract</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Department</th>
+                <th>ACTIVE</th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+
+<script>
+        $(document).ready(function () {
+            var datatable = $("#contactDataTbl").DataTable({
+                "ajax": {
+                    "url": "/Contact/GetContacts",
+                    "type": "get",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "ContactTitleId", "autoWidth": true },
+                    { "data": "ContactFirstName", "autoWidth": true },
+                    { "data": "ContactLastName", "autoWidth": true },
+                    { "data": "TypeOfContract", "autoWidth": true },
+                    { "data": "Email", "autoWidth": true },
+                    { "data": "PhoneNumber", "autoWidth": true },
+                    { "data": "Department", "autoWidth": true },
+                    { "data": "ACTIVE", "autoWidth": true },
+                    {
+                        "data": "ContactId", "width": "50px", "render": function (data) {
+                            return '<a class="popup" href="/Contact/Save/'+data+'"> Edit </a> / <a class="popup" href="/Contact/Delete/' + data + '"> Delete </a>';
+                        }
+                    }
+                ]
+            });
+
+            Popup = [];
+            $('.tblContact').on('click', 'a.popup', function (e) {
+                e.preventDefault();
+                Popup.Open($(this).attr('href'), datatable, $(e)[0].currentTarget.text)
+            })
+
+            Popup = {
+                Open : function (pageUrl, dataTable,title) {
+                    var $div = $('<div/>');
+                    $div.load(pageUrl, function () {
+                        //$("#popup", $div).removeData('validator');
+                        //$("#popup", $div).removeData('unbostrusiveValidation');
+                        //$.validator.unbostrusive.parse('form');
+                    });
+
+                    $dialog = $('<div class="popupWindow" style="overflow:auto"></div>')
+                                .html($div)
+                                .dialog(
+                                {
+                                    draggable: false,
+                                    autoOpen: false,
+                                    resizable: false,
+                                    model: true,
+                                    title: title,
+                                    height: 400,
+                                    width: 600,
+                                    close: function () {
+                                        $dialog.dialog('destroy').remove();
+                                    }
+
+                                })
+                    $('.popupWindow').on('submit', "#popup", function (e) {
+                        var url = $("#popup")[0].action;
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            data: $("#popup").serialize(),
+                            success: function (data) {
+                                if (data.status) {
+                                    $dialog.dialog('close');
+                                    dataTable.ajax.reload();
+                                }
+                            }
+                        })
+                        e.preventDefault();
+                    })
+
+                    $dialog.dialog('open');
+                }
+            }
+
+
+
+
+        })
+</script>

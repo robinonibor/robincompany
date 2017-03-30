@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width" />
+    <title>Robin</title>
+
+    <!--[if gt IE 8]><!-->
+    <link href="~/Content/menu.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css">
+    <style>
+        span.field-validation-error {
+            color: red;
+        }
+    </style>
+
+    <!--<![endif]-->
+</head>
+<body>
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+
+    <div id="layout">
+        <a href="#menu" id="menuLink" class="menu-link">
+            <span></span>
+        </a>
+        <div id="menu">
+            <div class="pure-menu">
+                <a class="pure-menu-heading" href="#">Robin</a>
+                <ul class="pure-menu-list">
+                    <li class="pure-menu-item"><a href="/Home/Index" class="pure-menu-link">Company</a></li>
+                    <li class="pure-menu-item"><a href="/Contract/Index" class="pure-menu-link">Contracts</a></li>
+                    <li class="pure-menu-item"><a href="/Contact/Index" class="pure-menu-link">Contracts</a></li>
+                </ul>
+            </div>
+        </div>
+        <br /><br />
+        <div id="main">
+            <div>
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/ui.js"></script>
+
+</body>
+</html>

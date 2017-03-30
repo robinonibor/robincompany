@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RobinCompanyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Companies">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CompanyABNCAN" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+          <Property Name="CompanyWebsite" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Contacts">
+          <Key>
+            <PropertyRef Name="ContactId" />
+          </Key>
+          <Property Name="ContactId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ContactTitleId" Type="bigint" />
+          <Property Name="ContactFirstName" Type="varchar(max)" />
+          <Property Name="ContactLastName" Type="varchar(max)" />
+          <Property Name="TypeOfContract" Type="bigint" />
+          <Property Name="Email" Type="varchar(max)" />
+          <Property Name="PhoneNumber" Type="varchar(max)" />
+          <Property Name="Department" Type="varchar(max)" />
+          <Property Name="ACTIVE" Type="bit" />
+        </EntityType>
+        <EntityType Name="Contracts">
+          <Key>
+            <PropertyRef Name="ContractId" />
+          </Key>
+          <Property Name="ContractId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ContractType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ContractSignedDate" Type="datetime" />
+          <Property Name="ContractEndDate" Type="datetime" />
+          <Property Name="ContractRenewalDate" Type="datetime" />
+          <Property Name="ContractPrice" Type="bigint" Nullable="false" />
+        </EntityType>
+        <Function Name="uspDeleteCompany" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CompanyID" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="uspDeleteContact" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ContactId" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="uspDeleteContract" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ContractId" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="uspInsertCompany" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CompanyName" Type="varchar(max)" Mode="In" />
+          <Parameter Name="CompanyDescription" Type="varchar(max)" Mode="In" />
+          <Parameter Name="CompanyABNCAN" Type="varchar(max)" Mode="In" />
+          <Parameter Name="CompanyWebsite" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="uspInsertContact" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ContactTitleID" Type="bigint" Mode="In" />
+          <Parameter Name="ContactFirstName" Type="varchar(max)" Mode="In" />
+          <Parameter Name="ContactLastName" Type="varchar(max)" Mode="In" />
+          <Parameter Name="ContactType" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Email" Type="varchar(max)" Mode="In" />
+          <Parameter Name="PhoneNumber" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Department" Type="varchar(max)" Mode="In" />
+          <Parameter Name="ACTIVE" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="uspInsertContract" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ContractType" Type="varchar(max)" Mode="In" />
+          <Parameter Name="ContractSignedDate" Type="datetime" Mode="In" />
+          <Parameter Name="ContractEndDate" Type="datetime" Mode="In" />
+          <Parameter Name="ContractRenewalDate" Type="datetime" Mode="In" />
+          <Parameter Name="Price" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="uspUpdateCompany" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CompanyName" Type="varchar(max)" Mode="In" />
+          <Parameter Name="CompanyDescription" Type="varchar(max)" Mode="In" />
+          <Parameter Name="CompanyABNCAN" Type="varchar(max)" Mode="In" />
+          <Parameter Name="CompanyWebsite" Type="varchar(max)" Mode="In" />
+          <Parameter Name="CompanyID" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="uspUpdateContacts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ContactId" Type="bigint" Mode="In" />
+          <Parameter Name="ContactTitleID" Type="bigint" Mode="In" />
+          <Parameter Name="ContactFirstName" Type="varchar(max)" Mode="In" />
+          <Parameter Name="ContactLastName" Type="varchar(max)" Mode="In" />
+          <Parameter Name="ContactType" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Email" Type="varchar(max)" Mode="In" />
+          <Parameter Name="PhoneNumber" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Department" Type="varchar(max)" Mode="In" />
+          <Parameter Name="ACTIVE" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="uspUpdateContract" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ContractId" Type="bigint" Mode="In" />
+          <Parameter Name="ContractType" Type="varchar(max)" Mode="In" />
+          <Parameter Name="ContractStartDate" Type="datetime" Mode="In" />
+          <Parameter Name="ContractEndDate" Type="datetime" Mode="In" />
+          <Parameter Name="ContractRenewalDate" Type="datetime" Mode="In" />
+          <Parameter Name="ContractPrice" Type="bigint" Mode="In" />
+        </Function>
+        <EntityContainer Name="RobinCompanyModelStoreContainer">
+          <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contracts" EntityType="Self.Contracts" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RobinCompanyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CompanyABNCAN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyWebsite" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="ContactId" />
+          </Key>
+          <Property Name="ContactId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ContactTitleId" Type="Int64" />
+          <Property Name="ContactFirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ContactLastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TypeOfContract" Type="Int64" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Department" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ACTIVE" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Contract">
+          <Key>
+            <PropertyRef Name="ContractId" />
+          </Key>
+          <Property Name="ContractId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ContractType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ContractSignedDate" Type="DateTime" Precision="3" />
+          <Property Name="ContractEndDate" Type="DateTime" Precision="3" />
+          <Property Name="ContractRenewalDate" Type="DateTime" Precision="3" />
+          <Property Name="ContractPrice" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="RobinCompanyEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Companies" EntityType="Self.Company" />
+          <EntitySet Name="Contacts" EntityType="Self.Contact" />
+          <EntitySet Name="Contracts" EntityType="Self.Contract" />
+          <FunctionImport Name="uspDeleteCompany">
+            <Parameter Name="CompanyID" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="uspDeleteContact">
+            <Parameter Name="ContactId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="uspDeleteContract">
+            <Parameter Name="ContractId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="uspInsertCompany">
+            <Parameter Name="CompanyName" Mode="In" Type="String" />
+            <Parameter Name="CompanyDescription" Mode="In" Type="String" />
+            <Parameter Name="CompanyABNCAN" Mode="In" Type="String" />
+            <Parameter Name="CompanyWebsite" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="uspInsertContact">
+            <Parameter Name="ContactTitleID" Mode="In" Type="Int64" />
+            <Parameter Name="ContactFirstName" Mode="In" Type="String" />
+            <Parameter Name="ContactLastName" Mode="In" Type="String" />
+            <Parameter Name="ContactType" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="PhoneNumber" Mode="In" Type="String" />
+            <Parameter Name="Department" Mode="In" Type="String" />
+            <Parameter Name="ACTIVE" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="uspInsertContract">
+            <Parameter Name="ContractType" Mode="In" Type="String" />
+            <Parameter Name="ContractSignedDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ContractEndDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ContractRenewalDate" Mode="In" Type="DateTime" />
+            <Parameter Name="Price" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="uspUpdateCompany">
+            <Parameter Name="CompanyName" Mode="In" Type="String" />
+            <Parameter Name="CompanyDescription" Mode="In" Type="String" />
+            <Parameter Name="CompanyABNCAN" Mode="In" Type="String" />
+            <Parameter Name="CompanyWebsite" Mode="In" Type="String" />
+            <Parameter Name="CompanyID" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="uspUpdateContacts">
+            <Parameter Name="ContactId" Mode="In" Type="Int64" />
+            <Parameter Name="ContactTitleID" Mode="In" Type="Int64" />
+            <Parameter Name="ContactFirstName" Mode="In" Type="String" />
+            <Parameter Name="ContactLastName" Mode="In" Type="String" />
+            <Parameter Name="ContactType" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="PhoneNumber" Mode="In" Type="String" />
+            <Parameter Name="Department" Mode="In" Type="String" />
+            <Parameter Name="ACTIVE" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="uspUpdateContract">
+            <Parameter Name="ContractId" Mode="In" Type="Int64" />
+            <Parameter Name="ContractType" Mode="In" Type="String" />
+            <Parameter Name="ContractStartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ContractEndDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ContractRenewalDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ContractPrice" Mode="In" Type="Int64" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RobinCompanyModelStoreContainer" CdmEntityContainer="RobinCompanyEntities">
+          <EntitySetMapping Name="Companies">
+            <EntityTypeMapping TypeName="RobinCompanyModel.Company">
+              <MappingFragment StoreEntitySet="Companies">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyABNCAN" ColumnName="CompanyABNCAN" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CompanyWebsite" ColumnName="CompanyWebsite" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="RobinCompanyModel.Contact">
+              <MappingFragment StoreEntitySet="Contacts">
+                <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+                <ScalarProperty Name="ContactTitleId" ColumnName="ContactTitleId" />
+                <ScalarProperty Name="ContactFirstName" ColumnName="ContactFirstName" />
+                <ScalarProperty Name="ContactLastName" ColumnName="ContactLastName" />
+                <ScalarProperty Name="TypeOfContract" ColumnName="TypeOfContract" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="ACTIVE" ColumnName="ACTIVE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contracts">
+            <EntityTypeMapping TypeName="RobinCompanyModel.Contract">
+              <MappingFragment StoreEntitySet="Contracts">
+                <ScalarProperty Name="ContractId" ColumnName="ContractId" />
+                <ScalarProperty Name="ContractType" ColumnName="ContractType" />
+                <ScalarProperty Name="ContractSignedDate" ColumnName="ContractSignedDate" />
+                <ScalarProperty Name="ContractEndDate" ColumnName="ContractEndDate" />
+                <ScalarProperty Name="ContractRenewalDate" ColumnName="ContractRenewalDate" />
+                <ScalarProperty Name="ContractPrice" ColumnName="ContractPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="uspDeleteCompany" FunctionName="RobinCompanyModel.Store.uspDeleteCompany" />
+          <FunctionImportMapping FunctionImportName="uspDeleteContact" FunctionName="RobinCompanyModel.Store.uspDeleteContact" />
+          <FunctionImportMapping FunctionImportName="uspDeleteContract" FunctionName="RobinCompanyModel.Store.uspDeleteContract" />
+          <FunctionImportMapping FunctionImportName="uspInsertCompany" FunctionName="RobinCompanyModel.Store.uspInsertCompany" />
+          <FunctionImportMapping FunctionImportName="uspInsertContact" FunctionName="RobinCompanyModel.Store.uspInsertContact" />
+          <FunctionImportMapping FunctionImportName="uspInsertContract" FunctionName="RobinCompanyModel.Store.uspInsertContract" />
+          <FunctionImportMapping FunctionImportName="uspUpdateCompany" FunctionName="RobinCompanyModel.Store.uspUpdateCompany" />
+          <FunctionImportMapping FunctionImportName="uspUpdateContacts" FunctionName="RobinCompanyModel.Store.uspUpdateContacts" />
+          <FunctionImportMapping FunctionImportName="uspUpdateContract" FunctionName="RobinCompanyModel.Store.uspUpdateContract" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

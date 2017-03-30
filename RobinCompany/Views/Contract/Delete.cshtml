@@ -1,0 +1,26 @@
+﻿@model RobinCompany.Models.Contract
+
+@using (Html.BeginForm("Delete", "Contract", FormMethod.Post, new { id = "popup" }))
+{
+    @Html.HiddenFor(x => x.ContractId);
+    <div class="form-group">
+        <label>Type :</label> @Model.ContractType
+    </div>
+    <div class="form-group">
+        <label>Signed Date :</label> @Model.ContractSignedDate
+    </div>
+    <div class="form-group">
+        <label>End Date :</label>
+        @Model.ContractEndDate
+    </div>
+    <div class="form-group">
+        <label>Renewal Date :</label> @Model.ContractRenewalDate
+    </div>
+    <div class="form-group">
+        <label>Price :</label> @Model.ContractPrice
+    </div>
+
+    <div>
+        <input type="submit" value="Delete" />
+    </div>
+}

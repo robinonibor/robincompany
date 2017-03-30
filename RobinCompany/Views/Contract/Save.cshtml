@@ -1,0 +1,37 @@
+﻿@model RobinCompany.Models.Contract
+
+@using (Html.BeginForm("save", "contract", FormMethod.Post, new { id = "popup" }))
+{
+    if (Model != null && Model.ContractId > 0)
+    {
+        @Html.HiddenFor(x => x.ContractId)
+    }
+
+    <div class="form-group">
+        <label>Type</label>
+        @Html.TextBoxFor(x => x.ContractType, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.ContractType)
+    </div>
+    <div class="form-group">
+        <label>Signed Date</label>
+        @Html.EditorFor(x => x.ContractSignedDate, "Date", new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.ContractSignedDate)
+    </div>
+    <div class="form-group">
+        <label>End Date</label>
+        @Html.EditorFor(x => x.ContractEndDate, "Date", new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.ContractEndDate)
+    </div>
+    <div class="form-group">
+        <label>Renewal Date</label>
+        @Html.EditorFor(x => x.ContractRenewalDate, "Date", new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.ContractRenewalDate)
+    </div>
+    <div class="form-group">
+        <label>Price</label>
+        @Html.TextBoxFor(x => x.ContractPrice, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.ContractPrice)
+    </div>
+
+    <input type="submit" value="Save" />
+}

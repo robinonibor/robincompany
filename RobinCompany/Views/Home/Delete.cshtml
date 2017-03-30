@@ -1,0 +1,23 @@
+﻿@model RobinCompany.Models.Company
+
+@using (Html.BeginForm("Delete", "Home", FormMethod.Post, new { id = "popup" }))
+{
+    @Html.HiddenFor(x => x.CompanyId);
+    <div class="form-group">
+        <label>Name :</label> @Model.CompanyName
+    </div>
+    <div class="form-group">
+        <label>ABN/CAN :</label> @Model.CompanyABNCAN
+    </div>
+    <div class="form-group">
+        <label>Company Description :</label> 
+        @Model.Description
+    </div>
+    <div class="form-group">
+        <label>Website :</label> @Model.CompanyWebsite
+    </div>
+
+    <div>
+        <input type="submit" value="Delete" />
+    </div>
+}

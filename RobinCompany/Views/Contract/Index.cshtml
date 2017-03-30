@@ -1,0 +1,134 @@
+﻿@{
+    Layout = "~/Shared/_LayoutPage1.cshtml";
+}
+<div style="width:90%; margin:0 auto" class="tblContract">
+    <a class="popup btn btn-primary" href="/Contract/Save/0" style="margin-bottom:20px; margin-top:2px;">Add New Contract</a>
+    <table id="contractDataTbl">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Signed Date</th>
+                <th>End Date</th>
+                <th>Renewal Date</th>
+                <th>Price</th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+
+<script>
+        $(document).ready(function () {
+            var datatable = $("#contractDataTbl").DataTable({
+                "ajax": {
+                    "url": "/Contract/GetContracts",
+                    "type": "get",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "ContractType", "autoWidth": true },
+                    { "data": "ContractSignedDate", "type": "date ",
+                        "render": function (value) {
+                            if (value === null) return "";
+
+                            var pattern = /Date\(([^)]+)\)/;
+                            var results = pattern.exec(value);
+                            var dt = new Date(parseFloat(results[1]));
+
+                            return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+                        },
+                        "autoWidth": true },
+                    {
+                        "data": "ContractEndDate", "type": "date ",
+                        "render": function (value) {
+                            if (value === null) return "";
+
+                            var pattern = /Date\(([^)]+)\)/;
+                            var results = pattern.exec(value);
+                            var dt = new Date(parseFloat(results[1]));
+
+                            return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+                        },
+                        "autoWidth": true
+                    },
+                    {
+                        "data": "ContractRenewalDate", "type": "date ",
+                        "render": function (value) {
+                            if (value === null) return "";
+
+                            var pattern = /Date\(([^)]+)\)/;
+                            var results = pattern.exec(value);
+                            var dt = new Date(parseFloat(results[1]));
+
+                            return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+                        },
+                        "autoWidth": true
+                    },
+                    { "data": "ContractPrice", "autoWidth": true },
+                    {
+                        "data": "ContractId", "width": "50px", "render": function (data) {
+                            return '<a class="popup" href="/Contract/Save/'+data+'"> Edit </a> / <a class="popup" href="/Contract/Delete/' + data + '"> Delete </a>';
+                        }
+                    }
+                ]
+            });
+
+            Popup = [];
+            $('.tblContract').on('click', 'a.popup', function (e) {
+                e.preventDefault();
+                Popup.Open($(this).attr('href'), datatable, $(e)[0].currentTarget.text)
+            })
+
+            Popup = {
+                Open : function (pageUrl, dataTable,title) {
+                    var $div = $('<div/>');
+                    $div.load(pageUrl, function () {
+                        $("#popup", $div).removeData('validator');
+                        $("#popup", $div).removeData('unbostrusiveValidation');
+                        $.validator.unbostrusive.parse('form');
+                    });
+
+                    $dialog = $('<div class="popupWindow" style="overflow:auto"></div>')
+                                .html($div)
+                                .dialog(
+                                {
+                                    draggable: false,
+                                    autoOpen: false,
+                                    resizable: false,
+                                    model: true,
+                                    title: title,
+                                    height: 400,
+                                    width: 600,
+                                    close: function () {
+                                        $dialog.dialog('destroy').remove();
+                                    }
+
+                                })
+                    $('.popupWindow').on('submit', "#popup", function (e) {
+                        var url = $("#popup")[0].action;
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            data: $("#popup").serialize(),
+                            success: function (data) {
+                                if (data.status) {
+                                    $dialog.dialog('close');
+                                    dataTable.ajax.reload();
+                                }
+                            }
+                        })
+                        e.preventDefault();
+                    })
+
+                    $dialog.dialog('open');
+                }
+            }
+
+
+
+
+        })
+</script>
+
+

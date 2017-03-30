@@ -1,0 +1,97 @@
+﻿
+@{
+    Layout = "~/Shared/_LayoutPage1.cshtml";
+}
+    <div style="width:90%; margin:0 auto" class="tblCompany"> 
+        <a class="popup btn btn-primary" href="/Home/Save/0" style="margin-bottom:20px; margin-top:2px;">Add New Company</a>
+        <table id="companyDataTbl">
+            <thead>
+                <tr>
+                    <th>Company Name</th>
+                    <th>Company ABN/CAN</th>
+                    <th>Description</th>
+                    <th>Email</th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    
+    <script>
+        $(document).ready(function () {
+            var datatable = $("#companyDataTbl").DataTable({
+                "ajax": {
+                    "url": "/Home/GetCompanies",
+                    "type": "get",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "CompanyName", "autoWidth": true },
+                    { "data": "CompanyABNCAN", "autoWidth": true },
+                    { "data": "Description", "autoWidth": true },
+                    { "data": "CompanyWebsite", "autoWidth": true },
+                    {
+                        "data": "CompanyId", "width": "50px", "render": function (data) {
+                            return '<a class="popup" href="/Home/Save/'+data+'"> Edit </a> / <a class="popup" href="/Home/Delete/' + data + '"> Delete </a>';
+                        }
+                    }
+                ]
+            });
+
+            Popup = [];
+            $('.tblCompany').on('click', 'a.popup', function (e) {
+                e.preventDefault();
+                Popup.Open($(this).attr('href'), datatable, $(e)[0].currentTarget.text)
+            })
+
+            Popup = {
+                Open : function (pageUrl, dataTable,title) {
+                    var $div = $('<div/>');
+                    $div.load(pageUrl, function () {
+                        $("#popup", $div).removeData('validator');
+                        $("#popup", $div).removeData('unbostrusiveValidation');
+                        $.validator.unbostrusive.parse('form');
+                    });
+
+                    $dialog = $('<div class="popupWindow" style="overflow:auto"></div>')
+                                .html($div)
+                                .dialog(
+                                {
+                                    draggable: false,
+                                    autoOpen: false,
+                                    resizable: false,
+                                    model: true,
+                                    title: title,
+                                    height: 400,
+                                    width: 600,
+                                    close: function () {
+                                        $dialog.dialog('destroy').remove();
+                                    }
+
+                                })
+                    $('.popupWindow').on('submit', "#popup", function (e) {
+                        var url = $("#popup")[0].action;
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            data: $("#popup").serialize(),
+                            success: function (data) {
+                                if (data.status) {
+                                    $dialog.dialog('close');
+                                    dataTable.ajax.reload();
+                                }
+                            }
+                        })
+                        e.preventDefault();
+                    })
+
+                    $dialog.dialog('open');
+                }
+            }
+
+            
+
+
+        })
+    </script>
